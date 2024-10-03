@@ -8,6 +8,7 @@ Bu proje, Node.js ve Puppeteer kullanarak WhatsApp üzerinden mesaj göndermek i
 
 ## Kurulum
 
+**Depoyu Klonlayın:**
 ```bash
 git clone https://github.com/mertalitosun/proje_adi.git
 ```
