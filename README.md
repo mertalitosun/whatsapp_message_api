@@ -12,7 +12,24 @@ Bu proje, Node.js ve Puppeteer kullanarak WhatsApp üzerinden mesaj göndermek i
 ```bash
 git clone https://github.com/mertalitosun/proje_adi.git
 ```
-
+**Gerekli Paketleri Yükleyin:**
 ```bash
 npm install
+```
+
+**Sunucuyu Başlatın:**
+```bash
+node index.js
+veya
+npm start
+```
+**Mesaj Gönderme İsteği Yapın: Aşağıdaki örnek JSON formatını kullanarak bir POST isteği gönderin:**
+```bash
+POST http://localhost:3000/send-message
+Content-Type: application/json
+
+{
+    "phoneNumber": "905xxxxxxxxx",
+    "message": "Merhaba, bu bir test mesajıdır."
+}
 ```
