@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
 const app = express();
 const port = 3000;
 
-// JSON gövdesini ayrıştırmak için middleware
+
 app.use(express.json());
 
 // WhatsApp mesajı gönderme fonksiyonu
@@ -17,7 +17,6 @@ async function sendWhatsAppMessage(phoneNumber, message) {
 
     await page.goto('https://web.whatsapp.com/', { waitUntil: 'networkidle2' });
 
-    console.log('QR kodunu tarayın ve ardından devam etmek için Enter tuşuna basın...');
     await page.waitForFunction(() =>  document.querySelector('div[title="Yeni sohbet"]') !== null);
     await page.evaluate(() => {
         const newChatButton = document.querySelector('div[title="Yeni sohbet"]');
@@ -26,8 +25,6 @@ async function sendWhatsAppMessage(phoneNumber, message) {
         }
     });
     console.log("Yeni sohbet butonuna tıklandı");
-
-    // İletişim bilgilerini almak için WhatsApp arama kutusunu kullan
 
     const inputSelector = 'div[role="textbox"]';
     await page.waitForSelector(inputSelector) // Öğeyi bekle
@@ -50,7 +47,6 @@ async function sendWhatsAppMessage(phoneNumber, message) {
     // await browser.close();
 }
 
-// Mesaj gönderme isteği için bir endpoint oluşturma
 app.post('/send-message', async (req, res) => {
     const { phoneNumber, message } = req.body;
     if (!phoneNumber || !message) {
