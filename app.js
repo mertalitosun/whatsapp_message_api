@@ -6,14 +6,20 @@ const port = 3000;
 
 
 app.use(express.json());
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: true }));
 
 // WhatsApp mesajı gönderme fonksiyonu
 async function sendWhatsAppMessage(phoneNumber, message) {
     const browser = await puppeteer.launch({
         headless: false,
         executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        userDataDir: '/Users/mertalitosun/Library/Application Support/Google/Chrome/Profile 3'
     });
-    const page = await browser.newPage();
+
+    // const page = await browser.newPage();
+    const pages = await browser.pages();
+    const page = pages.length > 0 ? pages[0]  : await browser.newPage(); 
 
     await page.goto('https://web.whatsapp.com/', { waitUntil: 'networkidle2' });
 
@@ -47,8 +53,13 @@ async function sendWhatsAppMessage(phoneNumber, message) {
     // await browser.close();
 }
 
+app.get("/send-message",(req,res)=>{
+    res.render("index");
+})
+
 app.post('/send-message', async (req, res) => {
     const { phoneNumber, message } = req.body;
+
     if (!phoneNumber || !message) {
         return res.status(400).json({ error: 'Telefon numarası ve mesaj gerekli.' });
     }
